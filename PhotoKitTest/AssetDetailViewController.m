@@ -9,6 +9,10 @@
 #import "AssetDetailViewController.h"
 @import CoreLocation;
 
+@interface AssetDetailViewController()
+@property (nonatomic, strong) NSDictionary *imageInfo;
+@end
+
 @implementation AssetDetailViewController
 
 - (void)viewDidLoad {
@@ -44,22 +48,20 @@
 
 - (void)changedImageSize:(UISegmentedControl *)sender {
     NSMutableString *log = [[NSMutableString alloc] init];
-    _imageLoadLogTextView.text = @"";
+    _imageLoadLogLabel.text = @"";
     CGSize imageSize = CGSizeMake(160 * (sender.selectedSegmentIndex + 1), 160 * (sender.selectedSegmentIndex + 1));
-    NSLog(@"%@", NSStringFromCGSize(imageSize));
     NSTimeInterval startTime = [NSDate date].timeIntervalSince1970;
     [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:imageSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
-        
         _imageView.image = result;
-
         NSTimeInterval diff = [NSDate date].timeIntervalSince1970 - startTime;
         [log appendString:[NSString stringWithFormat:@"%fmsec ", diff]];
         [log appendString:NSStringFromCGSize(result.size)];
         [log appendString:@", SCALE:"];
         [log appendString:[NSString stringWithFormat:@"%.0f ", result.scale]];
         [log appendString:@"\n"];
-        _imageLoadLogTextView.text = log;
+        _imageLoadLogLabel.text = log;
         
+        self.imageInfo = info;
         //NSLog(@"%@", info);
     }];
 }
@@ -107,16 +109,20 @@
     }];
 }
 
-- (void)showMetadata:(id)sender {
-    if (!_metaScrollView.hidden) {
+- (void)showMetadata:(UIButton *)sender {
+    _showPhotoInfoButton.selected = NO;
+    if (sender.selected) {
         _metaScrollView.hidden = YES;
+        sender.selected = NO;
         return;
     }
+    
     [[PHImageManager defaultManager] requestImageDataForAsset:_asset options:nil resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
         NSDictionary *metadata = [self metadataFromImageData:imageData];
         _metaScrollView.hidden = NO;
         _metaLabel.text = [NSString stringWithFormat:@"%@", metadata];
         _metaScrollView.contentOffset = CGPointZero;
+        sender.selected = YES;
     }];
 }
 
@@ -134,6 +140,19 @@
         CFRelease(imageSource);
     }
     return nil;
+}
+
+- (void)showImageInfo:(UIButton *)sender {
+    _showMetaButton.selected = NO;
+    if (sender.selected) {
+        _metaScrollView.hidden = YES;
+        sender.selected = NO;
+        return;
+    }
+    sender.selected = YES;
+    _metaScrollView.hidden = NO;
+    _metaLabel.text = [NSString stringWithFormat:@"%@", _imageInfo];
+    _metaScrollView.contentOffset = CGPointZero;
 }
 
 @end
