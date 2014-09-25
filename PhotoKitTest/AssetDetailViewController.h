@@ -27,9 +27,13 @@
 @property (nonatomic, weak) IBOutlet UISwitch *favSwitch;
 @property (nonatomic, weak) IBOutlet UISwitch *hiddenSwitch;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *imageSizeSegment;
-@property (nonatomic, weak) IBOutlet UITextView *imageLoadLogTextView;
+@property (nonatomic, weak) IBOutlet UILabel *imageLoadLogLabel;
+
+@property (nonatomic, weak) IBOutlet UIButton *showMetaButton;
+@property (nonatomic, weak) IBOutlet UIButton *showPhotoInfoButton;
 @property (nonatomic, weak) IBOutlet UIScrollView *metaScrollView;
 @property (nonatomic, weak) IBOutlet UILabel *metaLabel;
+
 
 @property (nonatomic, strong) PHAsset *asset;
 
@@ -38,6 +42,6 @@
 - (IBAction)changedFavorite:(UISwitch *)sender;
 - (IBAction)changedHidden:(UISwitch *)sender;
 - (IBAction)changedImageSize:(UISegmentedControl *)sender;
-- (IBAction)showMetadata:(id)sender;
-
+- (IBAction)showMetadata:(UIButton *)sender;
+- (IBAction)showImageInfo:(UIButton *)sender;
 @end
