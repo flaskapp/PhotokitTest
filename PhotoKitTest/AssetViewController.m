@@ -82,6 +82,12 @@
             return @"VideoTimelapse";
         case PHAssetMediaSubtypeNone:
             return @"None";
+        case PHAssetMediaSubtypePhotoScreenshot:
+            return @"PhotoScreenshot";
+        case PHAssetMediaSubtypePhotoLive:
+            return @"PhotoLive";
+        case PHAssetMediaSubtypePhotoDepthEffect:
+            return @"PhotoDepthEffect";
     }
 }
 

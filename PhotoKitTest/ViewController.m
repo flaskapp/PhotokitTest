@@ -170,6 +170,16 @@
             return @"Timelapses";
         case PHAssetCollectionSubtypeSmartAlbumVideos:
             return @"Videos";
+        case PHAssetCollectionSubtypeAlbumMyPhotoStream:
+            return @"MyPhotoStream";
+        case PHAssetCollectionSubtypeSmartAlbumUserLibrary:
+            return @"AlbumUserLibrary";
+        case PHAssetCollectionSubtypeSmartAlbumScreenshots:
+            return @"Screenshots";
+        case PHAssetCollectionSubtypeSmartAlbumSelfPortraits:
+            return @"SelfPortraits";
+        case PHAssetCollectionSubtypeSmartAlbumDepthEffect:
+            return @"DepthEffect";
     }
 }
 
